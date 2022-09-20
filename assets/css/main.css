@@ -1,0 +1,146 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  font-family: 'Nunito', sans-serif; }
+
+ul {
+  list-style-type: none; }
+
+a {
+  text-decoration: none;
+  color: black; }
+
+#top {
+  width: 100%;
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; }
+  #top .navbar {
+    z-index: 1;
+    position: sticky;
+    top: 2rem;
+    width: 100%;
+    height: 10rem;
+    margin-top: 2rem;
+    font-size: 1.6em; }
+    #top .navbar__items {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around; }
+      #top .navbar__items li:nth-child(2) {
+        margin-left: 1.7rem; }
+    #top .navbar__links {
+      display: block;
+      height: 10rem;
+      line-height: 8rem;
+      color: aliceblue; }
+    #top .navbar__links.logo {
+      width: 10rem;
+      height: 10rem; }
+      #top .navbar__links.logo img {
+        width: 100%;
+        height: 100%; }
+  #top .reservation {
+    z-index: 1;
+    margin-bottom: 6rem; }
+    #top .reservation__buttom {
+      cursor: pointer;
+      color: aliceblue;
+      font-size: 2em;
+      padding: 1rem;
+      border: 2px solid rgba(0, 103, 221, 0);
+      border-radius: 10px;
+      background: #0067dd;
+      transition: all .5s ease-in; }
+
+#main .gallery-background {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  overflow: hidden; }
+  #main .gallery-background__mobile {
+    width: 300%;
+    height: 75vh;
+    display: flex;
+    margin-left: -100%; }
+    #main .gallery-background__mobile__section {
+      width: 100%; }
+      #main .gallery-background__mobile__section .img-mobile {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(65%); }
+  #main .gallery-background__buttom {
+    z-index: 1;
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(255, 255, 255, 0.7);
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    cursor: pointer; }
+    #main .gallery-background__buttom img {
+      z-index: 1;
+      height: 100%;
+      width: 100%; }
+    #main .gallery-background__buttom:hover {
+      background-color: #fff; }
+  #main .gallery-background__buttom--right {
+    right: 10px; }
+  #main .gallery-background__buttom--left {
+    left: 10px; }
+
+#main .presentation {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-top: 2.5rem; }
+  #main .presentation__pre-name {
+    font-size: 2.4em;
+    display: inline-block;
+    margin: 0 3rem; }
+  #main .presentation__hotel-name {
+    font-size: 3.6em;
+    display: inline-block;
+    text-transform: uppercase;
+    color: #6dbdff;
+    margin: 1rem auto; }
+  #main .presentation__descr-hotel {
+    font-size: 1.6em;
+    margin: 2rem;
+    text-align: justify; }
+
+#main-rooms {
+  background: linear-gradient(179.4deg, #0c1445 -16.9%, #471e54 119.9%); }
+  #main-rooms #top {
+    height: 16rem; }
+  #main-rooms .rooms-gallery {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: 7rem;
+    flex: 1 1 50%; }
+    #main-rooms .rooms-gallery__article {
+      margin: 0 3rem; }
+      #main-rooms .rooms-gallery__article .card__cont-img {
+        max-width: 50rem;
+        max-height: 44rem;
+        background-color: beige;
+        padding: 5px;
+        border-radius: 15px;
+        display: flex; }
+        #main-rooms .rooms-gallery__article .card__cont-img img {
+          width: 100%;
+          height: 100%;
+          border-radius: 10px; }
