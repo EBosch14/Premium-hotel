@@ -74,7 +74,7 @@ function showCardReserv(){
             let $title_room = document.querySelector('#title-room');
             $title_room.textContent = rooms[index];
             $title_room.setAttribute('style', 'text-transform: uppercase;');
-            document.body.setAttribute('style', 'overflow: hidden;')
+            document.body.setAttribute('style', 'overflow: hidden;');
         });
     })
 }
@@ -106,6 +106,7 @@ function validateReserv(event){
         document.querySelector('#exit-date').value = '';
         document.querySelector('#price-total').innerHTML = `0`;
         document.querySelector('.reservation-card__background').setAttribute('style', 'display: none');
+        document.body.setAttribute('style', 'overflow: auto;');
         saveLocalStorage(reservations);
         swal({
             title: 'HOTEL PREMIUM',
