@@ -19,7 +19,7 @@
                         <a class="navbar__links logo" href="../../index.html"><img src="../img/svg/logo-hotel.svg" alt="logo"></a>
                     </li>
                     <li>
-                        <a class="navbar__links services" href="./services.html">Services</a>
+                        <a class="navbar__links services" href="#">Services</a>
                     </li>
                 </ul>
             </nav>
@@ -30,44 +30,66 @@
                     <div class="card__cont-img"><img src="../img/habitaciones/habitacion-matrimonial.jpg" alt="habitacion-matrimonial"></div>
                     <p></p>
                 </div>
-                <button id="reservation-btn">Reserve it</button>
+                <button class="reservation-btn" id="btn-matrimonial">Reserve it</button>
             </article>  
             <article class="rooms-gallery__article">
                 <div class="card">
                     <div class="card__cont-img"><img src="../img/habitaciones/habitacion-deluxe.jpg" alt="habitacion-deluxe"></div>
                     <p></p>
                 </div>
-                <button id="reservation-btn">Reserve it</button>
+                <button class="reservation-btn">Reserve it</button>
             </article>
             <article class="rooms-gallery__article">
                 <div class="card">
                     <div class="card__cont-img"><img src="../img/habitaciones/habitacion-presidencial.jpg" alt="habitacion-presidencial"></div>
                     <p></p>
                 </div>
-                <button id="reservation-btn">Reserve it</button>
+                <button class="reservation-btn">Reserve it</button>
             </article>
             <article class="rooms-gallery__article">
                 <div class="card">
                     <div class="card__cont-img"><img src="../img/habitaciones/habitacion-doble.jpg" alt="habitacion-doble"></div>
                     <p></p>
                 </div>
-                <button id="reservation-btn">Reserve it</button>
+                <button class="reservation-btn">Reserve it</button>
             </article>
             <article class="rooms-gallery__article">
                 <div class="card">
                     <div class="card__cont-img"><img src="../img/habitaciones/habitacion-triple.jpg" alt="habitacion-triple"></div>
                     <p></p>
                 </div>
-                <button id="reservation-btn">Reserve it</button>
+                <button class="reservation-btn">Reserve it</button>
             </article>
             <article class="rooms-gallery__article">
                 <div class="card">
                     <div class="card__cont-img"><img src="../img/habitaciones/habitacion-cuadruple.jpg" alt="habitacion-cuadruple"></div>
                     <p></p>
                 </div>
-                <button id="reservation-btn">Reserve it</button>
+                <button class="reservation-btn">Reserve it</button>
             </article>  
         </section>
     </main>
+    <div class="reservation-card__background">
+        <div class="reservation-card">
+            <div id="info-reserv" class="reservation-card__info">
+                <p id="title-room"></p>
+                <p>Price/day: $<span id="price-room">0</span></p>
+            </div>
+            <form action="" id="form-reserv" class="reservation-card__form">
+                <select name="select-room" id="select-room"></select>
+                <div class="entry-day">
+                    <label for="entry-day">Entry Day: </label>
+                    <input type="date" name="entry-day" id="entry-date" min="2022-10-3">
+                </div>
+                <div class="exit-day">
+                    <label for="exit-day">Exit Day: </label>
+                    <input type="date" name="exit-day" id="exit-date">
+                </div>
+                <p>Total: $<span id="price-total">0</span></p>
+                <button type="submit" id="sumbit-btn">Reserve IT</button>
+            </form>
+        </div>
+    </div>
+    <script src="../scripts/scripts-rooms.js"></script>
 </body>
 </html>
