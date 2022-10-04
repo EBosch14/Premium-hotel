@@ -8,6 +8,7 @@ class Room{
         this.price = price;
     }
 }
+let reservations = [];
 
 let rooms = [
     'Habitacion Matrimonial',
@@ -42,11 +43,13 @@ function showSelectRooms(){
 function changeSelectRooms(){
     let $select = document.querySelector('#select-room');
     $select.addEventListener('change', () =>{
+
         let $price_room = document.querySelector('#price-room');
         $price_room.textContent = prices[$select.value];
         let $title_room = document.querySelector('#title-room');
         $title_room.textContent = rooms[$select.value];
         $title_room.setAttribute('style', 'text-transform: uppercase;');
+
         let $entry_date = document.querySelector('#entry-date');
         $entry_date.value = '';
         let $exit_date = document.querySelector('#exit-date');
@@ -78,14 +81,50 @@ function showCardReserv(){
 
 function sumbitBtn(){
 
-    let $sumbit_reserv = document.querySelector('#form-reserv');
-    let $select = document.querySelector('#select-room');
+    let $sumbit_reserv = document.getElementById('form-reserv');
     let $entry_date = document.querySelector('#entry-date');
     let $exit_date = document.querySelector('#exit-date');
 
+    
     restringInputDates($entry_date, $exit_date);
     setDatesAndPrices($entry_date, $exit_date);
-    
+
+    $sumbit_reserv.onsubmit = (event) => validateReserv(event);
+}
+
+function validateReserv(event){
+
+    event.preventDefault();
+    let room_index = document.querySelector('#select-room').value;
+    let entry_date = document.querySelector('#entry-date').value;
+    let exit_date = document.querySelector('#exit-date').value;
+    let price = document.querySelector('#price-total').innerHTML;
+    if (entry_date && exit_date){
+
+        reservations.push(new Room(rooms[room_index], entry_date, exit_date, price));
+        document.querySelector('#entry-date').value = '';
+        document.querySelector('#exit-date').value = '';
+        document.querySelector('#price-total').innerHTML = `0`;
+        document.querySelector('.reservation-card__background').setAttribute('style', 'display: none');
+        saveLocalStorage(reservations);
+        swal({
+            title: 'HOTEL PREMIUM',
+            text: 'your reservation has been successfully saved',
+            icon: 'success'
+        })
+    }else{
+        swal({
+            title: 'HOTEL PREMIUM',
+            text: 'Please complete all fields',
+            icon: 'warning'
+        })
+    }
+
+}
+
+function saveLocalStorage(array){
+    array = JSON.stringify(array);
+    localStorage.setItem('Reservations', array);
 }
 
 function setDatesAndPrices(date1, date2){
@@ -99,7 +138,7 @@ function setDatesAndPrices(date1, date2){
         exit_date = date2.value;
         total_days = Math.floor((Date.parse(exit_date) - Date.parse(entry_date))/msToDays);
         //console.log(total_days);
-        const $price_room = document.querySelector('#price-room');
+        let $price_room = document.querySelector('#price-room');
         let $price_total = document.querySelector('#price-total');
         $price_total.innerHTML = `${total_days * parseInt($price_room.innerHTML)}`;
     })
