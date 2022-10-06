@@ -28,8 +28,43 @@ let prices = [
     3500
 ]
 
+//***********BEGIN CONFIG DATE***********//
 const msToDays = 1000 * 60 * 60 * 24;
 
+function restringInputDates(){
+    let $entry_date = document.querySelector('#entry-date');
+    let $exit_date = document.querySelector('#exit-date');
+    $entry_date.addEventListener('change', () =>{
+        next_day = $entry_date.value.split('-');
+        next_day[2] = parseInt(next_day[2]) < 10 ? ('0' + (parseInt(next_day[2]) + 1)) : ('' + (parseInt(next_day[2]) + 1));
+        next_day = next_day.join('-');
+        $exit_date.setAttribute('min', `${next_day}`);
+        if ($entry_date.value >= $exit_date.value){
+            $exit_date.value = next_day;
+        }
+    })
+}
+
+function setDefaultDate(date1, date2){
+    let today = new Date();
+    today = today.toISOString().split('T')[0];
+    let one_year = new Date(Date.parse(today) + 31536000000);
+    one_year = one_year.toISOString().split('T')[0];
+    date1.value = today;
+    date1.setAttribute('min', `${today}`);
+    date1.setAttribute('max', `${one_year}`);
+
+    let next_day = today.split('-');
+    next_day[2] = parseInt(next_day[2]) < 10 ? ('0' + (parseInt(next_day[2]) + 1)) : ('' + (parseInt(next_day[2]) + 1));
+    next_day = next_day.join('-');
+    date2.value = next_day;
+    date2.setAttribute('min', `${next_day}`);
+    date2.setAttribute('max', `${one_year}`);
+}
+//***********END CONFIG DATES***********//
+
+
+//***********BEGIN ROOMS SHOW***********//
 function showSelectRooms(){
     let $select = document.querySelector('#select-room')
     rooms.forEach((ev, index) =>{
@@ -49,18 +84,34 @@ function changeSelectRooms(){
         let $title_room = document.querySelector('#title-room');
         $title_room.textContent = rooms[$select.value];
         $title_room.setAttribute('style', 'text-transform: uppercase;');
-
-        let $entry_date = document.querySelector('#entry-date');
-        $entry_date.value = '';
-        let $exit_date = document.querySelector('#exit-date');
-        $exit_date.value = '';
-        let $price_total = document.querySelector('#price-total');
-        $price_total.innerHTML = 0;
+        setDefaultDate(document.querySelector('#entry-date'), document.querySelector('#exit-date'));
     })
-    
+}
+//***********END ROOMS SHOW***********//
+
+
+//***********BEGIN SET PRICES***********//
+function setPrices(){
+    let $entry_date = document.querySelector('#entry-date');
+    let $exit_date = document.querySelector('#exit-date');
+    document.querySelector('#price-total').innerHTML = changePriceTotal($entry_date, $exit_date);
+    $entry_date.addEventListener('change', () => {
+        document.querySelector('#price-total').innerHTML = changePriceTotal($entry_date, $exit_date);
+    })
+    $exit_date.addEventListener('change', () => {
+        document.querySelector('#price-total').innerHTML = changePriceTotal($entry_date, $exit_date);
+    })
 }
 
+function changePriceTotal(date1, date2){
+    let total_days;
+    total_days = Math.floor((Date.parse(date2.value) - Date.parse(date1.value))/msToDays);
+    return (total_days * parseInt(prices[document.querySelector('#select-room').value]));
+}
+//***********END SET PRICES***********//
 
+
+//***********BEGIN CARD RESERVATION***********//
 function showCardReserv(){
     let $rsv_btn = document.querySelectorAll('.reservation-btn');
 
@@ -73,22 +124,21 @@ function showCardReserv(){
             $price_room.textContent = prices[index];
             let $title_room = document.querySelector('#title-room');
             $title_room.textContent = rooms[index];
+            setDefaultDate(document.querySelector('#entry-date'), document.querySelector('#exit-date'));
             $title_room.setAttribute('style', 'text-transform: uppercase;');
             document.body.setAttribute('style', 'overflow: hidden;');
+            setPrices();
         });
     })
+    restringInputDates();
 }
+//***********END CARD RESERVATION***********//
 
+
+//***********BEGIN SAVE RESERVATION***********//
 function sumbitBtn(){
 
     let $sumbit_reserv = document.getElementById('form-reserv');
-    let $entry_date = document.querySelector('#entry-date');
-    let $exit_date = document.querySelector('#exit-date');
-
-    
-    restringInputDates($entry_date, $exit_date);
-    setDatesAndPrices($entry_date, $exit_date);
-
     $sumbit_reserv.onsubmit = (event) => validateReserv(event);
 }
 
@@ -127,34 +177,8 @@ function saveLocalStorage(array){
     array = JSON.stringify(array);
     localStorage.setItem('Reservations', array);
 }
+//***********END SAVE RESERVATION***********//
 
-function setDatesAndPrices(date1, date2){
-    let entry_date;
-    let exit_date;
-    let total_days;
-    date1.addEventListener('change', () =>{
-        entry_date = date1.value;
-    })
-    date2.addEventListener('change', () =>{
-        exit_date = date2.value;
-        total_days = Math.floor((Date.parse(exit_date) - Date.parse(entry_date))/msToDays);
-        //console.log(total_days);
-        let $price_room = document.querySelector('#price-room');
-        let $price_total = document.querySelector('#price-total');
-        $price_total.innerHTML = `${total_days * parseInt($price_room.innerHTML)}`;
-    })
-}
-
-function restringInputDates(date1, date2){
-    let today = new Date();
-    today = today.toISOString().split('T')[0];
-    let one_year = new Date(Date.parse(today) + 31536000000);
-    one_year = one_year.toISOString().split('T')[0];
-    date1.setAttribute('min', `${today}`);
-    date1.setAttribute('max', `${one_year}`);
-    date2.setAttribute('min', `${today}`);
-    date2.setAttribute('max', `${one_year}`);
-}
 
 function main(){
     showCardReserv();
