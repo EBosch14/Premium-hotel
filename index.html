@@ -26,7 +26,7 @@
                 </ul>
             </nav>
             <div class="reservation">
-                <button class="reservation__buttom">RESERVE NOW!</button>
+                <button class="btn-index reservation-btn">RESERVE NOW!</button>
             </div>
             <div class="gallery-background">
                 <div class="gallery-background__mobile" id="carrousel">
@@ -75,6 +75,29 @@
             </div>
         </div>
     </footer>
+    <div class="reservation-card__background">
+        <div class="reservation-card">
+            <div class="close" id="btn-close"><img src="./assets/img/svg/btn-close.svg" alt=""></div>
+            <div id="info-reserv" class="reservation-card__info">
+                <p id="title-room"></p>
+                <p>Price/day: $<span id="price-room">0</span></p>
+            </div>
+            <form action="" id="form-reserv" class="reservation-card__form">
+                <select name="select-room" id="select-room"></select>
+                <div class="entry-day">
+                    <label for="entry-day">Entry Day: </label>
+                    <input type="date" name="entry-day" id="entry-date" min="2022-10-3">
+                </div>
+                <div class="exit-day">
+                    <label for="exit-day">Exit Day: </label>
+                    <input type="date" name="exit-day" id="exit-date">
+                </div>
+                <p>Total: $<span id="price-total">0</span></p>
+                <button type="submit" id="sumbit-btn">Reserve IT</button>
+            </form>
+        </div>
+    </div>
     <script src="./assets/scripts/scripts-index.js"></script>
+    <script src="./assets/scripts/scripts-rooms.js"></script>
 </body>
 </html>

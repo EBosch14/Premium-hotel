@@ -53,7 +53,7 @@ a {
   #top .reservation {
     z-index: 1;
     margin-bottom: 6rem; }
-    #top .reservation__buttom {
+    #top .reservation .btn-index {
       cursor: pointer;
       color: aliceblue;
       font-size: 2em;

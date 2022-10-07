@@ -73,6 +73,8 @@ function showSelectRooms(){
         $option.innerHTML = `${ev}`;
         $select.appendChild($option);
     })
+    restringInputDates();
+    setPrices();
 }
 
 function changeSelectRooms(){
@@ -85,6 +87,7 @@ function changeSelectRooms(){
         $title_room.textContent = rooms[$select.value];
         $title_room.setAttribute('style', 'text-transform: uppercase;');
         setDefaultDate(document.querySelector('#entry-date'), document.querySelector('#exit-date'));
+        setPrices();
     })
 }
 //***********END ROOMS SHOW***********//
@@ -129,8 +132,16 @@ function showCardReserv(){
             document.body.setAttribute('style', 'overflow: hidden;');
             setPrices();
         });
+        changeSelectRooms();
     })
-    restringInputDates();
+}
+
+function closeCardReserv(){
+    let $btn_close = document.querySelector('#btn-close');
+    $btn_close.addEventListener('click', () =>{
+        document.querySelector('.reservation-card__background').setAttribute('style', 'display: none;');
+        document.body.setAttribute('style', 'overflow: auto;');
+    })
 }
 //***********END CARD RESERVATION***********//
 
@@ -181,9 +192,9 @@ function saveLocalStorage(array){
 
 
 function main(){
-    showCardReserv();
     showSelectRooms();
-    changeSelectRooms();
+    showCardReserv();
+    closeCardReserv();
     sumbitBtn();
 }
 
