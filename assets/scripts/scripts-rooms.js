@@ -28,6 +28,84 @@ let prices = [
     3500
 ]
 
+
+//***********BEGIN USER LOGIN***********//
+function showLoginUser(){
+    const $login_btn = document.querySelector('#login-btn');
+    $login_btn.addEventListener('click', () => {
+        let login_div = document.createElement('div');
+        login_div.innerHTML = 
+        `<div class="login-card">
+            <div class="close" id="btn-close-login"><img src="./assets/img/svg/btn-close.svg" alt=""></div>
+            <form class="login-card__form" id="login-form">
+                <div class="username-container">
+                    <label for="username">Username</label>
+                    <input maxlength="10" type="text" id="username" placeholder="username">
+                </div>
+                <div class="password-container">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="*******">
+                </div>
+                <button id="sumbit-login" type="submit">Log In</button>
+            </form>
+        </div>`;
+        document.body.appendChild(login_div);
+        login_div.className = 'reservation-card__background';
+        login_div.setAttribute('style', 'display: flex;');
+        document.body.setAttribute('style', 'overflow:hidden;')
+        let $close = document.querySelector("#btn-close-login");
+        $close.addEventListener('click', () =>{
+            login_div.remove();
+            document.body.setAttribute('style', 'overflow:auto;');
+        })
+        validateLogin(login_div);
+    })
+}
+
+function validateLogin(login_div){
+    const $username = document.querySelector('#username');
+    const $password = document.querySelector('#password');
+    const $btn_sumbit = document.querySelector('#sumbit-login');
+    $btn_sumbit.addEventListener('click', () => {
+        if ($password.value && $username.value){
+            sessionStorage.setItem('Username', $username.value);
+            sessionStorage.setItem('Password', $password.value);
+            swal({
+                title: 'HOTEL PREMIUM',
+                text: '',
+                icon: 'success'
+            })
+            login_div.remove();
+            document.body.setAttribute('style', 'overflow:auto;');
+            let user_loged = document.createElement('li');
+            if(sessionStorage.getItem('Username') && sessionStorage.getItem('Password')){
+                user_loged.innerHTML =`<a id="navbar__user" class="navbar__links" href="#">${$username.value}</a>`;
+                document.querySelector('#navbar__item-login').remove();
+                document.querySelector('.navbar__items').appendChild(user_loged);
+            }
+        }else{
+            swal({
+                title: 'HOTEL PREMIUM',
+                text: 'Please complete all fields',
+                icon: 'warning'
+            })
+        }
+    })
+}
+
+function refreshPage(){
+    window.onload = (el) =>{
+        if(sessionStorage.getItem('Username') && sessionStorage.getItem('Password')){
+            let user_loged = document.createElement('li');
+            user_loged.innerHTML =`<a id="navbar__user" class="navbar__links" href="#">${sessionStorage.getItem('Username')}</a>`;
+            document.querySelector('#navbar__item-login').remove();
+            document.querySelector('.navbar__items').appendChild(user_loged);
+        }
+    }
+}
+//***********BEGIN USER LOGIN***********//
+
+
 //***********BEGIN CONFIG DATE***********//
 const msToDays = 1000 * 60 * 60 * 24;
 
@@ -136,7 +214,7 @@ function showCardReserv(){
     })
 }
 
-function closeCardReserv(){
+function closeCard(){
     let $btn_close = document.querySelector('#btn-close');
     $btn_close.addEventListener('click', () =>{
         document.querySelector('.reservation-card__background').setAttribute('style', 'display: none;');
@@ -150,12 +228,22 @@ function closeCardReserv(){
 function sumbitBtn(){
 
     let $sumbit_reserv = document.getElementById('form-reserv');
-    $sumbit_reserv.onsubmit = (event) => validateReserv(event);
+    $sumbit_reserv.onsubmit = (event) => {
+        event.preventDefault();
+        if(sessionStorage.getItem('Username') && sessionStorage.getItem('Password')){
+            validateReserv();
+        }else{
+            swal({
+                title: 'HOTEL PREMIUM',
+                text: 'Please Log In',
+                icon: 'warning'
+            })
+        }
+    }
 }
 
-function validateReserv(event){
+function validateReserv(){
 
-    event.preventDefault();
     let room_index = document.querySelector('#select-room').value;
     let entry_date = document.querySelector('#entry-date').value;
     let exit_date = document.querySelector('#exit-date').value;
@@ -192,9 +280,11 @@ function saveLocalStorage(array){
 
 
 function main(){
+    refreshPage();
+    showLoginUser();
     showSelectRooms();
     showCardReserv();
-    closeCardReserv();
+    closeCard();
     sumbitBtn();
 }
 
