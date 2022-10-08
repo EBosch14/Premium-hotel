@@ -103,7 +103,7 @@ function refreshPage(){
         }
     }
 }
-//***********BEGIN USER LOGIN***********//
+//***********END USER LOGIN***********//
 
 
 //***********BEGIN CONFIG DATE***********//
