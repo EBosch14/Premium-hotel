@@ -113,28 +113,29 @@ function restringInputDates(){
     let $entry_date = document.querySelector('#entry-date');
     let $exit_date = document.querySelector('#exit-date');
     $entry_date.addEventListener('change', () =>{
-        next_day = $entry_date.value.split('-');
-        next_day[2] = parseInt(next_day[2]) < 10 ? ('0' + (parseInt(next_day[2]) + 1)) : ('' + (parseInt(next_day[2]) + 1));
-        next_day = next_day.join('-');
+        let next_day = new Date(Date.parse(""+$entry_date.value));
+        next_day = new Date(next_day.getTime() + msToDays);
+        next_day = next_day.toISOString().split('T')[0];
         $exit_date.setAttribute('min', `${next_day}`);
-        if ($entry_date.value >= $exit_date.value){
-            $exit_date.value = next_day;
-        }
-    })
+        $entry_date.value == '' ? $exit_date.disabled = true : $exit_date.disabled = false;
+        $entry_date.value >= $exit_date.value && ($exit_date.value = next_day);
+    });
+    $entry_date.addEventListener('keydown', e => {e.preventDefault()});
+    $exit_date.addEventListener('keydown', e => {e.preventDefault()});
 }
 
 function setDefaultDate(date1, date2){
-    let today = new Date();
+    const timeZone = (new Date()).getTimezoneOffset() * 60000;
+    let today = new Date(Date.now() - timeZone);
     today = today.toISOString().split('T')[0];
     let one_year = new Date(Date.parse(today) + 31536000000);
     one_year = one_year.toISOString().split('T')[0];
     date1.value = today;
     date1.setAttribute('min', `${today}`);
     date1.setAttribute('max', `${one_year}`);
-
-    let next_day = today.split('-');
-    next_day[2] = parseInt(next_day[2]) < 10 ? ('0' + (parseInt(next_day[2]) + 1)) : ('' + (parseInt(next_day[2]) + 1));
-    next_day = next_day.join('-');
+    let next_day = new Date(Date.now() - timeZone);
+    next_day = new Date(next_day.getTime() + msToDays);
+    next_day = next_day.toISOString().split('T')[0];
     date2.value = next_day;
     date2.setAttribute('min', `${next_day}`);
     date2.setAttribute('max', `${one_year}`);
